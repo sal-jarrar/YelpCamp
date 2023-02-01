@@ -2,7 +2,7 @@ import pool from "../config/db.js";
 const resolvers = {
   Query: {
     getCapmgrounds: async () => {
-      const [rows, fields] = await pool.query("SELECT * FROM campground");
+      const [rows] = await pool.query("SELECT * FROM campground");
       return rows;
     },
     getCapmground: async (_, { campId }) => {
@@ -31,7 +31,7 @@ const resolvers = {
         )}');`
       );
 
-      const [rows, fields] = await pool.query(
+      const [rows] = await pool.query(
         `SELECT * FROM campground WHERE camp_id=${insertId}`
       );
       console.log(rows);

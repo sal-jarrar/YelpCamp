@@ -3,19 +3,24 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 const Header = () => {
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
-        <Container>
-          <Navbar.Brand href="/">Capmground</Navbar.Brand>
+      <Navbar variant="dark" expand="lg" collapseOnSelect>
+        <Container style={{ maxWidth: "60vw" }} className="d-flex">
+          <div className="flex-md-grow-1">
+            <Navbar.Brand href="/">YelpCamp</Navbar.Brand>
+          </div>
+
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#link">Link</Nav.Link>
-            </Nav>
-            <Navbar.Text>
-              Signed in as: <a href="#login">Mark Otto</a>
-            </Navbar.Text>
-          </Navbar.Collapse>
+          <div className="">
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto">
+                <Nav.Link href="#home">Home</Nav.Link>
+                <Nav.Link href="#link">Link</Nav.Link>
+                <Navbar.Text>
+                  Signed in as: <a href="#login">Mark Otto</a>
+                </Navbar.Text>
+              </Nav>
+            </Navbar.Collapse>
+          </div>
         </Container>
       </Navbar>
     </header>
