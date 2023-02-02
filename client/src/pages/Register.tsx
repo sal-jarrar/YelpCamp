@@ -1,11 +1,11 @@
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-function Login() {
+function Register() {
   return (
     <div className="welcome">
-      <div className="form-wrapper">
-        <h2 className="text-center">Login</h2>
+      <div className="form-wrapper" style={{ height: "550px" }}>
+        <h2 className="text-center">Register</h2>
         <Form>
           <Form.Group className="my-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
@@ -16,11 +16,15 @@ function Login() {
             <Form.Label>Password</Form.Label>
             <Form.Control type="password" placeholder="Password" />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control type="password" placeholder="Password" />
+          </Form.Group>
 
           <div>
-            Don't have an account?{" "}
-            <Link className="register" to={"/register"}>
-              <span>Register</span>
+            Already have an account?{" "}
+            <Link className="register" to={"/login"}>
+              <span>Login</span>
             </Link>
           </div>
 
@@ -35,4 +39,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;

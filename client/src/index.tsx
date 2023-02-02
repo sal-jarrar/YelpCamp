@@ -7,6 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 import Home from "./pages/Home";
 import Campgrounds from "./pages/Campgrounds";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -18,6 +19,7 @@ root.render(
         <Route index path="/" element={<Home />} />
         <Route index path="/campgrounds" element={<Campgrounds />} />
         <Route index path="/Login" element={<Login />} />
+        <Route index path="/register" element={<Register />} />
 
         {/* <App /> */}
       </Routes>
