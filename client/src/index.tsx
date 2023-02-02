@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./bootstrap.min.css";
 import reportWebVitals from "./reportWebVitals";
 import Home from "./pages/Home";
 import Campgrounds from "./pages/Campgrounds";
+import Login from "./pages/Login";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -17,6 +17,7 @@ root.render(
       <Routes>
         <Route index path="/" element={<Home />} />
         <Route index path="/campgrounds" element={<Campgrounds />} />
+        <Route index path="/Login" element={<Login />} />
 
         {/* <App /> */}
       </Routes>
