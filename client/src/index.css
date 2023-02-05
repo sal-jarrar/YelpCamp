@@ -56,6 +56,24 @@ main {
   color: rgba(242, 237, 232, 0.55);
 }
 
+.card-home {
+  transition: 200ms transform ease-in-out;
+  cursor: pointer;
+}
+
+.card-home .card-img-home {
+  opacity: 0.8;
+  background-color: #000;
+}
+.card-home .card-title-home {
+  font-size: 29px;
+}
+
+.card-home:hover {
+  transform: scale(1.1);
+  margin: 10px;
+}
+
 @media (max-width: 700px) {
   .form-wrapper {
     width: 350px;

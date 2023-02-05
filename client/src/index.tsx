@@ -18,6 +18,7 @@ root.render(
       <Routes>
         <Route index path="/" element={<Home />} />
         <Route index path="/campgrounds" element={<Campgrounds />} />
+        <Route index path="/page/:pageNumber" element={<Campgrounds />} />
         <Route index path="/Login" element={<Login />} />
         <Route index path="/register" element={<Register />} />
 
