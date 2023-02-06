@@ -14,7 +14,7 @@ function Campgrounds() {
   const page = Number(pageNumber) || 1;
   // const pageNumber = match.params.pageNumber || 1
   return (
-    <Layout>
+    <Layout showFooter={true}>
       <h1>Campgrounds</h1>
       <Row xs={1} md={3} className="g-3">
         {camps.slice(page, 10).map((camp) => (

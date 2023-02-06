@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import { CampgroundProps } from "../interfaces/campgrounds";
+import { LinkContainer } from "react-router-bootstrap";
+import Rating from "./Rating";
 
 const Text = ({ description }: { description: string }) => {
   const text =
@@ -10,21 +11,33 @@ const Text = ({ description }: { description: string }) => {
 
 function Campground({ campground }: CampgroundProps) {
   return (
-    <Card className="bg-dark fw-semibold text-white card-home">
-      <Card.Img
-        src={campground.url}
-        alt="Card image"
-        height={"300px"}
-        width={"100%"}
-        className="card-img-home"
-      />
-      <Card.ImgOverlay>
-        <Card.Title className="card-title-home">{campground.title}</Card.Title>
-        <Text description={campground.description} />
-        <Card.Text>{campground.location}</Card.Text>
-        <Card.Text className="fst-italic">By:{campground.author}</Card.Text>
-      </Card.ImgOverlay>
-    </Card>
+    <LinkContainer to={`/campground/${campground.camp_id}`}>
+      <div className="card-home">
+        <div className="card-home-inner">
+          <div className="card-face card-face-front">
+            <img src={campground.url} alt="" className="card-img" />
+          </div>
+          <div className="card-face card-face-back">
+            <div className="card-content">
+              <div className="card-header">
+                <img src={campground.url} alt="" className="pp" />
+              </div>
+              <div className="card-body">
+                <h3 className="px-2">{campground.title}</h3>
+                <Text description={campground.description} />
+                <Rating
+                  value={campground.rating}
+                  reviewsNum={campground.reviews}
+                />
+                <Card.Text className="fst-italic fs-6">
+                  By: {campground.author}
+                </Card.Text>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </LinkContainer>
   );
 }
 

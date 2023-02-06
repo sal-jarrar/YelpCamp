@@ -10,4 +10,6 @@ export interface Campground {
   description: string;
   price: number;
   url: string;
+  rating: number;
+  reviews: number;
 }

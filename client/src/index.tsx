@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Campgrounds from "./pages/Campgrounds";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Campground from "./pages/Campground";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -18,6 +19,7 @@ root.render(
       <Routes>
         <Route index path="/" element={<Home />} />
         <Route index path="/campgrounds" element={<Campgrounds />} />
+        <Route index path="/campground/:campId" element={<Campground />} />
         <Route index path="/page/:pageNumber" element={<Campgrounds />} />
         <Route index path="/Login" element={<Login />} />
         <Route index path="/register" element={<Register />} />
