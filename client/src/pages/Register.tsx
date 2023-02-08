@@ -1,33 +1,41 @@
 import { Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { Register_User } from "../graphql/user/Mutation";
-import { useState, FormEvent, useEffect } from "react";
+import { useState, FormEvent, useEffect, useContext } from "react";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import { UserContext } from "../context/UserContext";
 
 function Register() {
+  const navigate = useNavigate();
+  const { login } = useContext(UserContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState<string | null>(null);
-  const [register, { data, loading, error }] = useMutation(Register_User);
+  const [register, { loading, error }] = useMutation(Register_User, {
+    update(_, { data: { registerUser: userData } }) {
+      navigate("/");
+      login(userData);
+    },
+  });
   console.log(error);
+  const errorMessage =
+    error?.message === "Response not successful: Received status code 400"
+      ? "some error happened"
+      : error?.message;
 
-  const submitHandler = async (e: FormEvent) => {
+  const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    try {
-      if (password !== confirmPassword) {
-        setMessage("Passwords do not match");
-      } else {
-        register({
-          variables: { input: { name, email, password } },
-        });
-      }
-    } catch (err: unknown) {
-      const e = err instanceof Error ? err.message : "some error happened";
-      console.log(e, "eee");
+
+    if (password !== confirmPassword) {
+      setMessage("Passwords do not match");
+    } else {
+      register({
+        variables: { input: { name, email, password } },
+      });
     }
   };
   useEffect(() => {
@@ -41,7 +49,7 @@ function Register() {
       <div className="form-wrapper" style={{ height: "39rem" }}>
         <h2 className="text-center">Register</h2>
         {message && <Message variant="danger">{message}</Message>}
-        {error && <Message variant="danger">{error.message}</Message>}
+        {error && <Message variant="danger">{errorMessage}</Message>}
         {loading && <Loader />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId="name">

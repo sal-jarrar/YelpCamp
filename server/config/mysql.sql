@@ -21,3 +21,4 @@ CREATE TABLE campground(
 
 -- INSERT INTO campground(title,location,image,price,description,created_at,user_id) VALUES ('test','CA','img-1',123,'test 1','2023-01-12',1);
 -- INSERT INTO users(name,email,password) VALUES ('sultan jarrar','sultan@email.com','password');
+-- SELECT * FROM users WHERE email='sul-89-tn@hotmail.com';

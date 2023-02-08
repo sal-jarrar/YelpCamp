@@ -1,6 +1,12 @@
+import { useContext } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
+import { UserContext } from "../context/UserContext";
 
 const Header = () => {
+  const {
+    state: { user },
+    logout,
+  } = useContext(UserContext);
   return (
     <header>
       <Navbar variant="dark" expand="lg" collapseOnSelect>
@@ -14,10 +20,18 @@ const Header = () => {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
                 <Nav.Link href="#home">Home</Nav.Link>
-                <Nav.Link href="/login">Login</Nav.Link>
-                <Navbar.Text>
-                  Signed in as: <a href="#login">Mark Otto</a>
-                </Navbar.Text>
+                {user ? (
+                  <>
+                    <Nav.Link href="/" onClick={() => logout()}>
+                      Logout
+                    </Nav.Link>
+                    <Navbar.Text>
+                      Signed in as: <a href="#login">{user.name}</a>
+                    </Navbar.Text>
+                  </>
+                ) : (
+                  <Nav.Link href="/login">Login</Nav.Link>
+                )}
               </Nav>
             </Navbar.Collapse>
           </div>
