@@ -29,7 +29,7 @@ export default {
       `SELECT * FROM users WHERE email='${email}'`
     );
     console.log(res[0]);
-    const foundEmail = res[0].email;
+    const foundEmail = res[0]?.email;
 
     if (foundEmail) throw new Error("Dublicate email");
     const [{ insertId }] = await pool.query(

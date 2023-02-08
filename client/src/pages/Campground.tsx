@@ -1,15 +1,7 @@
 import React from "react";
 import Layout from "../components/Layout";
 import { Link } from "react-router-dom";
-import {
-  Button,
-  Card,
-  Col,
-  Form,
-  Image,
-  ListGroup,
-  Row,
-} from "react-bootstrap";
+import { Card, Col, ListGroup, Row } from "react-bootstrap";
 import Rating from "../components/Rating";
 import { seedDB } from "../constants/campgrounds";
 import { useParams } from "react-router";

@@ -1,6 +1,18 @@
 import Header from "../components/Header";
+import { useQuery, gql } from "@apollo/client";
+const Query = gql`
+  query ExampleQuery {
+    getCapmgrounds {
+      camp_id
+      title
+    }
+  }
+`;
 
 function Home() {
+  const { data, error, loading } = useQuery(Query);
+  console.log(data);
+
   return (
     <>
       <Header />
