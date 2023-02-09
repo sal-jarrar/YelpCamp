@@ -1,12 +1,18 @@
 interface RatingProps {
   value: number;
-  reviewsNum: number;
+  reviewsNum?: number;
   color?: string;
+  className?: string;
 }
 
-const Rating = ({ value, reviewsNum, color = "#f8e825" }: RatingProps) => {
+const Rating = ({
+  value,
+  reviewsNum,
+  color = "#f8e825",
+  className,
+}: RatingProps) => {
   return (
-    <div className="px-2">
+    <div className={className}>
       <span>
         <i
           style={{ color }}
@@ -67,7 +73,7 @@ const Rating = ({ value, reviewsNum, color = "#f8e825" }: RatingProps) => {
           }
         ></i>
       </span>
-      <span className="mx-2">{reviewsNum} reviews</span>
+      {reviewsNum && <span className="mx-2">{reviewsNum} reviews</span>}
     </div>
   );
 };

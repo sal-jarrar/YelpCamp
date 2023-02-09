@@ -28,6 +28,7 @@ function Campground({ campground }: CampgroundProps) {
                 <Rating
                   value={campground.rating}
                   reviewsNum={campground.reviews}
+                  className="px-2"
                 />
                 <Card.Text className="fst-italic fs-6">
                   By: {campground.author}

@@ -1,13 +1,25 @@
-import React from "react";
+import React, { FormEvent, useContext, useState } from "react";
 import Layout from "../components/Layout";
 import { Link } from "react-router-dom";
-import { Card, Col, ListGroup, Row } from "react-bootstrap";
+import { Button, Card, Col, Form, ListGroup, Row } from "react-bootstrap";
 import Rating from "../components/Rating";
 import { seedDB } from "../constants/campgrounds";
 import { useParams } from "react-router";
+import Reviews from "../components/Reviews";
+import Message from "../components/Message";
+import { UserContext } from "../context/UserContext";
 
 const camps = seedDB();
 function Campground() {
+  const {
+    state: { user },
+  } = useContext(UserContext);
+  const [rating, setRating] = useState("");
+  const [comment, setComment] = useState("");
+
+  const submitHandler = (e: FormEvent) => {
+    e.preventDefault();
+  };
   const { campId } = useParams();
   const id = Number(campId);
   const campground = camps.find((camp) => camp.camp_id === id);
@@ -28,21 +40,70 @@ function Campground() {
           {/* <Meta title={product.name} /> */}
           <Row>
             <Col md={6}>
-              <img
-                src={campground.url}
-                alt={campground.title}
-                style={{
-                  width: "600px",
-                  height: "650px",
-                  objectFit: "cover",
-                  boxShadow: "0 0 20px lightblue",
-                  borderRadius: "4px",
-                }}
-              />
+              <div className="d-flex flex-column">
+                <div>
+                  <img
+                    src={campground.url}
+                    alt={campground.title}
+                    className="img-camp"
+                  />
+                </div>
+                <div
+                  className="review-form"
+                  style={{ width: "550px", marginTop: "24px" }}
+                >
+                  <h4>Write a Customer Review</h4>
+                  {user ? (
+                    <Form onSubmit={submitHandler}>
+                      <Form.Group controlId="rating">
+                        <Form.Label>Rating</Form.Label>
+                        <Form.Control
+                          as="select"
+                          value={rating}
+                          onChange={(e) => setRating(e.target.value)}
+                          className="rating-input"
+                        >
+                          <option value="">Select...</option>
+                          <option value="1">1 - Poor</option>
+                          <option value="2">2 - Fair</option>
+                          <option value="3">3 - Good</option>
+                          <option value="4">4 - Very Good</option>
+                          <option value="5">5 - Excellent</option>
+                        </Form.Control>
+                      </Form.Group>
+                      <Form.Group controlId="comment" className="mt-3">
+                        <Form.Label>Comment</Form.Label>
+                        <Form.Control
+                          as="textarea"
+                          rows={3}
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                          className="rating-input"
+                        ></Form.Control>
+                      </Form.Group>
+                      <Form.Group>
+                        <Button
+                          // disabled={loadingcampgroundReview}
+                          type="submit"
+                          variant="outline-dark"
+                          size="lg"
+                          className="mt-3"
+                        >
+                          Submit
+                        </Button>
+                      </Form.Group>
+                    </Form>
+                  ) : (
+                    <Message variant="warning">
+                      Please <Link to="/login">sign in</Link> to write a review{" "}
+                    </Message>
+                  )}
+                </div>
+              </div>
             </Col>
             <Col md={6}>
               <ListGroup variant="flush">
-                <ListGroup.Item>
+                <ListGroup.Item className="review-card">
                   <h3>{campground.title}</h3>
                 </ListGroup.Item>
                 <ListGroup.Item>
@@ -56,17 +117,8 @@ function Campground() {
                   Description: {campground.description}
                 </ListGroup.Item>
               </ListGroup>
-              <Col className="mt-4">
-                <Card>
-                  <h2>Reviews</h2>
-                  {campground.reviews === 0 && <span>No Reviews</span>}
-                </Card>
-              </Col>
-              <Col className="mt-4">
-                <Card>
-                  <h2>Add Review</h2>
-                </Card>
-              </Col>
+
+              <Reviews campground={campground} />
             </Col>
           </Row>
         </>

@@ -1,18 +1,28 @@
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
-import { useQuery, gql } from "@apollo/client";
-const Query = gql`
-  query ExampleQuery {
-    getCapmgrounds {
-      camp_id
-      title
-    }
-  }
-`;
+import Loader from "../components/Loader";
 
 function Home() {
-  const { data, error, loading } = useQuery(Query);
-  console.log(data);
+  const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+  if (isLoading)
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Loader />
+      </div>
+    );
   return (
     <>
       <Header />
