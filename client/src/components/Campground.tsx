@@ -20,7 +20,11 @@ function Campground({ campground }: CampgroundProps) {
           <div className="card-face card-face-back">
             <div className="card-content">
               <div className="card-header">
-                <img src={campground.url} alt="" className="pp" />
+                <img
+                  src={`https://robohash.org/${campground.camp_id}?set=set2&size=180x180`}
+                  alt=""
+                  className="pp"
+                />
               </div>
               <div className="card-body">
                 <h3 className="px-2">{campground.title}</h3>

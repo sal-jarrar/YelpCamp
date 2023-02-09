@@ -1,15 +1,16 @@
+import { useState, FormEvent, useEffect } from "react";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
 import { Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { Register_User } from "../graphql/user/Mutation";
-import { useState, FormEvent, useEffect, useContext } from "react";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import { UserContext } from "../context/UserContext";
+
+import useUser from "../hooks/useUser";
 
 function Register() {
   const navigate = useNavigate();
-  const { login } = useContext(UserContext);
+  const { login } = useUser();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

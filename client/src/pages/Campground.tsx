@@ -1,19 +1,17 @@
-import React, { FormEvent, useContext, useState } from "react";
+import { FormEvent, useState } from "react";
 import Layout from "../components/Layout";
 import { Link } from "react-router-dom";
-import { Button, Card, Col, Form, ListGroup, Row } from "react-bootstrap";
+import { Button, Col, Form, ListGroup, Row } from "react-bootstrap";
 import Rating from "../components/Rating";
 import { seedDB } from "../constants/campgrounds";
 import { useParams } from "react-router";
 import Reviews from "../components/Reviews";
 import Message from "../components/Message";
-import { UserContext } from "../context/UserContext";
+import useUser from "../hooks/useUser";
 
 const camps = seedDB();
 function Campground() {
-  const {
-    state: { user },
-  } = useContext(UserContext);
+  const { user } = useUser();
   const [rating, setRating] = useState("");
   const [comment, setComment] = useState("");
 
@@ -104,7 +102,7 @@ function Campground() {
             <Col md={6}>
               <ListGroup variant="flush">
                 <ListGroup.Item className="review-card">
-                  <h3>{campground.title}</h3>
+                  <h4>{campground.title}</h4>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Rating

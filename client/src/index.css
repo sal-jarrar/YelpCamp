@@ -1,7 +1,10 @@
 main {
   min-height: 80vh;
 }
-
+* {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
 .welcome {
   height: 100vh;
   display: flex;
