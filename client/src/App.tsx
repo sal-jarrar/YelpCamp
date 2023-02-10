@@ -8,6 +8,7 @@ import { ApolloProvider, InMemoryCache, ApolloClient } from "@apollo/client";
 import { UserProvider } from "./context/UserContext";
 import { initState } from "./context/UserContext";
 import React from "react";
+import CreateCampground from "./pages/CreateCampground";
 
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
@@ -23,6 +24,11 @@ const App = () => {
             <Routes>
               <Route index path="/" element={<Home />} />
               <Route index path="/campgrounds" element={<Campgrounds />} />
+              <Route
+                index
+                path="/campground/create"
+                element={<CreateCampground />}
+              />
               <Route
                 index
                 path="/campground/:campId"

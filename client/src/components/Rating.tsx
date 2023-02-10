@@ -73,11 +73,11 @@ const Rating = ({
           }
         ></i>
       </span>
-      {reviewsNum && (
+      {reviewsNum ? (
         <span className="mx-2">
           {reviewsNum} review{reviewsNum > 1 && `s`}
         </span>
-      )}
+      ) : null}
     </div>
   );
 };

@@ -20,6 +20,7 @@ const Header = () => {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
                 <Nav.Link href="#home">Home</Nav.Link>
+                <Nav.Link href="/campground/create">Create</Nav.Link>
                 {user ? (
                   <>
                     <Nav.Link href="/" onClick={() => logout()}>

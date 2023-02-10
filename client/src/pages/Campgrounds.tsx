@@ -1,6 +1,5 @@
 import { Col, Row } from "react-bootstrap";
 import Layout from "../components/Layout";
-import { seedDB } from "../constants/campgrounds";
 import Campground from "../components/Campground";
 import Paginate from "../components/Paginate";
 import { useParams } from "react-router";
@@ -9,10 +8,6 @@ import { GET_CAMPGROUNDS } from "../graphql/campground/Query";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 
-const camps = seedDB();
-const pages = camps.length / 10;
-console.log(camps);
-
 function Campgrounds() {
   const { data, loading, error } = useQuery(GET_CAMPGROUNDS);
   const { pageNumber } = useParams();
@@ -20,7 +15,7 @@ function Campgrounds() {
 
   // const pageNumber = match.params.pageNumber || 1
   if (loading) return <Loader />;
-  if (error) return <Message variant="danger">{error.message}</Message>;
+  if (error) return <Message variant="danger">{error.message} hhh</Message>;
   data && console.log([...data.getCapmgrounds], "d");
   return (
     <Layout showFooter={true}>
@@ -36,7 +31,7 @@ function Campgrounds() {
           <Loader />
         )}
       </Row>
-      <Paginate pages={[...data.getCapmgrounds].length} page={page} />
+      <Paginate pages={[...data.getCapmgrounds].length / 10} page={page} />
     </Layout>
   );
 }

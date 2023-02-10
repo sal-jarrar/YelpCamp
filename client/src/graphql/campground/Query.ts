@@ -13,6 +13,7 @@ export const GET_CAMPGROUNDS = gql`
       location
       user {
         name
+        user_id
       }
       reviews {
         comment

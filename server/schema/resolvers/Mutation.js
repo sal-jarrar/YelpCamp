@@ -5,27 +5,28 @@ import bcrypt from "bcryptjs";
 
 export default {
   createCampground: async (_, { input }) => {
-    const {
-      title,
-      location,
-      image,
-      price,
-      description,
-      created_at,
-      geometry,
-      user_id,
-    } = input;
-    const [{ insertId }] = await pool.query(
-      `INSERT INTO campground(title,location,image,price,description,created_at,geometry,user_id) VALUES ('${title}','${location}','${image}','${price}','${description}','${created_at}',ST_GeomFromText('${geometry}'),'${parseInt(
-        user_id
-      )}');`
-    );
+    try {
+      const {
+        title,
+        location,
+        image,
+        price,
+        description,
+        created_at,
+        user_id,
+      } = input;
+      const [{ insertId }] = await pool.query(
+        `INSERT INTO campground(title,location,image,price,description,created_at,user_id) VALUES ('${title}','${location}','${image}','${price}','${description}','${created_at}','${user_id}');`
+      );
 
-    const [rows] = await pool.query(
-      `SELECT * FROM campground WHERE camp_id=${insertId}`
-    );
-    console.log(rows);
-    return rows[0];
+      const [rows] = await pool.query(
+        `SELECT * FROM campground WHERE camp_id=${insertId}`
+      );
+      console.log(rows);
+      return rows[0];
+    } catch (error) {
+      console.log(error);
+    }
   },
   registerUser: async (_, { input }) => {
     const { name, email, password } = input;

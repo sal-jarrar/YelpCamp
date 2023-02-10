@@ -45,7 +45,6 @@ const typeDefs = gql`
     description: String!
     image: String!
     location: String!
-    geometry: String!
     price: Float!
     created_at: String!
     user_id: ID!

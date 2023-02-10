@@ -10,10 +10,10 @@ export const Query = {
       const [user] = await pool.query(
         `SELECT * FROM users WHERE user_id='${rows[0].user_id}'`
       );
-
+      // console.log(user);
       return { ...row, rating: Number(rating[0].raitng), user: user[0] };
     });
-    console.log(await camps);
+
     return camps;
   },
   campground: async (_, { campId }) => {
