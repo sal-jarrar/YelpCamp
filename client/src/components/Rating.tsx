@@ -73,7 +73,11 @@ const Rating = ({
           }
         ></i>
       </span>
-      {reviewsNum && <span className="mx-2">{reviewsNum} reviews</span>}
+      {reviewsNum && (
+        <span className="mx-2">
+          {reviewsNum} review{reviewsNum > 1 && `s`}
+        </span>
+      )}
     </div>
   );
 };

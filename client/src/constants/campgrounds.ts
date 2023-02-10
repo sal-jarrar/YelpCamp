@@ -225,21 +225,21 @@ const sample = (array: typeof descriptors | typeof places) =>
   array[Math.floor(Math.random() * array.length)];
 export const seedDB = () => {
   const camps = [];
-  for (let i = 0; i < 50; i++) {
+  for (let i = 2; i < 52; i++) {
     const random1000 = Math.floor(Math.random() * 1000);
     const price = Math.floor(Math.random() * 20) + 10;
 
     camps.push({
       camp_id: i,
-      author: sample(nameList),
+      name: sample(nameList),
       location: `${cities[random1000].city}, ${cities[random1000].state}`,
       title: `${sample(descriptors)} ${sample(places)}`,
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam dolores vero perferendis laudantium, consequuntur voluptatibus nulla architecto, sit soluta esse iure sed labore ipsam a cum nihil atque molestiae deserunt!",
       price,
-      url: `https://source.unsplash.com/collection/152796${i}/campgrounds`,
+      image: `https://source.unsplash.com/collection/152796${i}/campgrounds`,
       rating: Math.fround(Math.random() * 6),
-      reviews: Math.floor(Math.random() * 100),
+      reviews: [],
     });
   }
 

@@ -3,7 +3,7 @@ import { gql } from "apollo-server";
 const typeDefs = gql`
   type Query {
     getCapmgrounds: [Campground]!
-    getCapmground(campId: ID): Campground
+    campground(campId: ID): Campground
     createCampground(input: CampgroundInput): Campground!
   }
   type Mutation {
@@ -11,6 +11,7 @@ const typeDefs = gql`
     registerUser(input: RegisterUserInput): User!
     loginUser(input: LoginUserInput): User!
   }
+
   type Campground {
     camp_id: ID!
     title: String!
@@ -19,7 +20,9 @@ const typeDefs = gql`
     location: String!
     price: Float!
     created_at: String!
-    user_id: ID!
+    user: User!
+    reviews: [Review]!
+    rating: Int!
   }
 
   type User {
@@ -27,6 +30,14 @@ const typeDefs = gql`
     name: String!
     email: String!
     token: String
+  }
+  type Review {
+    user: User!
+    camp_id: ID!
+    user_id: ID!
+    created_at: String!
+    comment: String!
+    rating: String!
   }
 
   input CampgroundInput {

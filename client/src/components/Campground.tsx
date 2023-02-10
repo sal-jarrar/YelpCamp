@@ -10,12 +10,13 @@ const Text = ({ description }: { description: string }) => {
 };
 
 function Campground({ campground }: CampgroundProps) {
+  console.log(campground, "s");
   return (
     <LinkContainer to={`/campground/${campground.camp_id}`}>
       <div className="card-home">
         <div className="card-home-inner">
           <div className="card-face card-face-front">
-            <img src={campground.url} alt="" className="card-img" />
+            <img src={campground.image} alt="" className="card-img" />
           </div>
           <div className="card-face card-face-back">
             <div className="card-content">
@@ -31,11 +32,11 @@ function Campground({ campground }: CampgroundProps) {
                 <Text description={campground.description} />
                 <Rating
                   value={campground.rating}
-                  reviewsNum={campground.reviews}
+                  reviewsNum={campground.reviews.length}
                   className="px-2"
                 />
                 <Card.Text className="fst-italic fs-6">
-                  By: {campground.author}
+                  By: {campground.user.name}
                 </Card.Text>
               </div>
             </div>

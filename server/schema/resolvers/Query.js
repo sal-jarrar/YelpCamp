@@ -2,13 +2,32 @@ import pool from "../../config/db.js";
 export const Query = {
   getCapmgrounds: async () => {
     const [rows] = await pool.query("SELECT * FROM campground");
-    return rows;
+
+    const camps = rows.map(async (row) => {
+      const [rating] = await pool.query(
+        `SELECT AVG(rating) as raitng FROM review WHERE camp_id='${row.camp_id}'`
+      );
+      const [user] = await pool.query(
+        `SELECT * FROM users WHERE user_id='${rows[0].user_id}'`
+      );
+
+      return { ...row, rating: Number(rating[0].raitng), user: user[0] };
+    });
+    console.log(await camps);
+    return camps;
   },
-  getCapmground: async (_, { campId }) => {
+  campground: async (_, { campId }) => {
     const [rows, fields] = await pool.query(
       `SELECT * FROM campground WHERE camp_id=${campId}`
     );
     console.log(rows);
-    return rows[0];
+    const [rating] = await pool.query(
+      `SELECT AVG(rating) as raitng FROM review WHERE camp_id='${campId}'`
+    );
+    const [user] = await pool.query(
+      `SELECT * FROM users WHERE user_id='${rows[0].user_id}'`
+    );
+
+    return { ...rows[0], rating: Number(rating[0].raitng), user: user[0] };
   },
 };
