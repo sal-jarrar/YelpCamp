@@ -12,7 +12,7 @@ import { CREATE_CAMP } from "../graphql/campground/Mutation";
 function CreateCampground() {
   const [uploading, setUploading] = useState(false);
   const { user } = useUser();
-  const [createCamp, { loading, error, data }] = useMutation(CREATE_CAMP, {
+  const [createCamp, { loading, error }] = useMutation(CREATE_CAMP, {
     update() {
       setUploading(true);
     },

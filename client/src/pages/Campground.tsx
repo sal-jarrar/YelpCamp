@@ -20,13 +20,15 @@ function Campground() {
     variables: { campId: id },
   });
 
-  const [addReview, { data: revData, loading: revLoading, error: revErr }] =
-    useMutation(ADD_REVIEW, {
+  const [addReview, { loading: revLoading, error: revErr }] = useMutation(
+    ADD_REVIEW,
+    {
       refetchQueries: [
         { query: GET_CAMPGROUND, variables: { campId: id } },
         { query: GET_CAMPGROUNDS },
       ],
-    });
+    }
+  );
   const { user } = useUser();
   const [rating, setRating] = useState("");
   const [comment, setComment] = useState("");
