@@ -4,10 +4,10 @@ const typeDefs = gql`
   type Query {
     getCapmgrounds: [Campground]!
     campground(campId: ID): Campground
-    createCampground(input: CampgroundInput): Campground!
   }
   type Mutation {
     createCampground(input: CampgroundInput): Campground!
+    updateCampground(input: UpdateCampgroundInput): Campground!
     registerUser(input: RegisterUserInput): User!
     loginUser(input: LoginUserInput): User!
     addReview(input: ReviewInput): Review!
@@ -49,6 +49,15 @@ const typeDefs = gql`
     price: Float!
     created_at: String!
     user_id: ID!
+  }
+  input UpdateCampgroundInput {
+    title: String!
+    description: String!
+    image: String!
+    location: String!
+    price: Float!
+    user_id: ID!
+    camp_id: ID!
   }
   input RegisterUserInput {
     name: String!

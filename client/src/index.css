@@ -112,10 +112,6 @@ main {
   font-size: 32px;
 }
 
-.create-header {
-  color: #fadc66;
-}
-
 .card-face-back {
   background-color: #f3f3f3;
   transform: rotateY(180deg);

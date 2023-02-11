@@ -1,27 +1,39 @@
 import { FormEvent, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import FormContainer from "../components/FormContainer";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { Alert, Button, Container, Form } from "react-bootstrap";
 import cities from "../constants/cities";
 import useUser from "../hooks/useUser";
-import { useMutation } from "@apollo/client";
-import { CREATE_CAMP } from "../graphql/campground/Mutation";
+import { useMutation, useQuery } from "@apollo/client";
+import { UPDATE_CAMP } from "../graphql/campground/Mutation";
+import { GET_CAMPGROUND, GET_CAMPGROUNDS } from "../graphql/campground/Query";
 
-function CreateCampground() {
+function CampgroundEdit() {
+  const { campId } = useParams();
+  const id = Number(campId) || 1;
+  const { data, loading, error } = useQuery(GET_CAMPGROUND, {
+    variables: { campId: id },
+  });
+
   const [uploading, setUploading] = useState(false);
   const { user } = useUser();
-  const [createCamp, { loading, error }] = useMutation(CREATE_CAMP, {
-    update() {
-      setUploading(true);
-    },
-  });
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
-  const [location, setLocation] = useState("");
-  const [description, setDescription] = useState("");
+  const [updateCamp, { loading: updateLoading, error: updateErr }] =
+    useMutation(UPDATE_CAMP, {
+      update() {
+        setUploading(true);
+      },
+      refetchQueries: [
+        { query: GET_CAMPGROUNDS },
+        { query: GET_CAMPGROUND, variables: { campId: id } },
+      ],
+    });
+  const [name, setName] = useState(data?.campground.title);
+  const [price, setPrice] = useState(data?.campground.price);
+  const [image, setImage] = useState(data?.campground.image);
+  const [location, setLocation] = useState(data?.campground.location);
+  const [description, setDescription] = useState(data?.campground.description);
 
   useEffect(() => {
     if (uploading)
@@ -41,7 +53,7 @@ function CreateCampground() {
         }}
       >
         <Message variant="warning">
-          Please <Link to="/login">sign in</Link> to write a review{" "}
+          Please <Link to="/login">sign in</Link> to update a campground{" "}
         </Message>
       </div>
     );
@@ -50,23 +62,21 @@ function CreateCampground() {
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const input = {
+      camp_id: Number(id),
       title: name,
       price: Number(price),
       location,
       description: description.replace(/'/g, "\\'"),
       image,
       user_id: Number(user.id),
-      created_at: new Date().toISOString().split("T")[0],
     };
 
     console.log(input);
 
-    createCamp({ variables: { input } });
+    updateCamp({ variables: { input } });
   };
-  console.log(description.replace(/[<>*()',?]/g, "\\$&"));
-
-  console.log(new Date().toISOString().split("T")[0]);
-
+  //   console.log(description.replace(/[<>*()',?]/g, "\\$&"));
+  if (error) return <Alert variant="danger">{updateErr?.message}</Alert>;
   return (
     <>
       <Container className=" my-4">
@@ -76,17 +86,14 @@ function CreateCampground() {
       </Container>
 
       <FormContainer>
-        <h2 className="text-warning">Create Campground</h2>
-        {/* {loadingUpdate && <Loader />}
-        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>} */}
-        {loading ? (
+        <h2 className="text-warning">Update Campground</h2>
+
+        {loading || updateLoading ? (
           <Loader />
         ) : (
           <>
-            {error && <Alert variant="danger">{error?.message}</Alert>}
-            {uploading && (
-              <Alert variant="warning-outline">Succesfully created</Alert>
-            )}
+            {updateErr && <Alert variant="danger">{updateErr?.message}</Alert>}
+            {uploading && <Alert variant="warning">Succesfully Updated</Alert>}
             <Form onSubmit={submitHandler}>
               <Form.Group controlId="name" className="my-3">
                 <Form.Label>Title</Form.Label>
@@ -145,7 +152,7 @@ function CreateCampground() {
               </Form.Group>
 
               <Button type="submit" variant="outline-warning" className="mt-3">
-                Create
+                Update
               </Button>
             </Form>
           </>
@@ -155,4 +162,4 @@ function CreateCampground() {
   );
 }
 
-export default CreateCampground;
+export default CampgroundEdit;

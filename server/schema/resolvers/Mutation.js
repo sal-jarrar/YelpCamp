@@ -36,6 +36,32 @@ export default {
       console.log(error);
     }
   },
+  updateCampground: async (_, { input }, context) => {
+    console.log(context);
+    const user = checkAuth(context);
+    console.log(user, "from auth");
+    try {
+      const { title, location, image, price, description, user_id, camp_id } =
+        input;
+
+      const [row] = await pool.query(
+        `UPDATE campground SET title='${title}',location='${location}',image='${image}',price='${price}',description='${description}',user_id='${user_id}' WHERE camp_id='${camp_id}'`
+      );
+
+      const [rows] = await pool.query(
+        `SELECT * FROM campground WHERE camp_id=${camp_id}`
+      );
+      console.log(rows);
+      const [userSql] = await pool.query(
+        `SELECT * FROM users WHERE user_id='${rows[0].user_id}'`
+      );
+      console.log(userSql, "user from sql");
+
+      return { ...rows[0], user: userSql[0] };
+    } catch (error) {
+      console.log(error);
+    }
+  },
   registerUser: async (_, { input }) => {
     const { name, email, password } = input;
     const [res] = await pool.query(

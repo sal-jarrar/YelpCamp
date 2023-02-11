@@ -8,6 +8,7 @@ import CreateCampground from "./pages/CreateCampground";
 import { UserProvider } from "./context/UserContext";
 import { initState } from "./context/UserContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import CampgroundEdit from "./pages/CampgroundEdit";
 
 const App = () => {
   return (
@@ -26,7 +27,7 @@ const App = () => {
             <Route
               index
               path="/campground/:campId/edit"
-              element={<Campground />}
+              element={<CampgroundEdit />}
             />
             <Route index path="/page/:pageNumber" element={<Campgrounds />} />
             <Route index path="/Login" element={<Login />} />

@@ -16,3 +16,19 @@ export const CREATE_CAMP = gql`
     }
   }
 `;
+export const UPDATE_CAMP = gql`
+  mutation UpdateCampground($input: UpdateCampgroundInput) {
+    updateCampground(input: $input) {
+      camp_id
+      title
+      description
+      created_at
+      price
+      image
+      location
+      user {
+        name
+      }
+    }
+  }
+`;
