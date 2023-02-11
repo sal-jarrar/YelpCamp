@@ -7,9 +7,7 @@ import resolvers from "./schema/resolvers.js";
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }) => {
-    req;
-  },
+  context: ({ req }) => req,
 });
 
 server.listen().then(({ url }) => console.log(`SERVER RUNNIG AT: ${url}`));

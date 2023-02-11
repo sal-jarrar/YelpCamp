@@ -1,10 +1,13 @@
 import { UserInputError } from "apollo-server";
 import pool from "../../config/db.js";
-import { generateToken } from "../../util/check-auth.js";
+import checkAuth, { generateToken } from "../../util/check-auth.js";
 import bcrypt from "bcryptjs";
 
 export default {
-  createCampground: async (_, { input }) => {
+  createCampground: async (_, { input }, context) => {
+    console.log(context);
+    const user = checkAuth(context);
+    console.log(user, "from auth");
     try {
       const {
         title,
@@ -23,7 +26,12 @@ export default {
         `SELECT * FROM campground WHERE camp_id=${insertId}`
       );
       console.log(rows);
-      return rows[0];
+      const [userSql] = await pool.query(
+        `SELECT * FROM users WHERE user_id='${rows[0].user_id}'`
+      );
+      console.log(userSql, "user from sql");
+
+      return { ...rows[0], userSql: user[0] };
     } catch (error) {
       console.log(error);
     }

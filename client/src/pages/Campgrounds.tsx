@@ -15,7 +15,7 @@ function Campgrounds() {
 
   // const pageNumber = match.params.pageNumber || 1
   if (loading) return <Loader />;
-  if (error) return <Message variant="danger">{error.message} hhh</Message>;
+  if (error) return <Message variant="danger">{error.message}</Message>;
   data && console.log([...data.getCapmgrounds], "d");
   return (
     <Layout showFooter={true}>
