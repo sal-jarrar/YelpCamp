@@ -96,13 +96,15 @@ main {
   align-items: center;
   justify-content: center;
 }
-.review-card {
+.review-card,
+.modal-delete-header {
   background-image: linear-gradient(to bottom right, #ffce00, #fe4880);
 }
 .form-control {
   /* box-shadow: 0px 3px 18px 2px rgb(233, 178, 12); */
   border: #ffce00 2px solid !important;
 }
+
 .form-control:focus {
   box-shadow: 0px 3px 13px 2px rgb(233, 178, 12) !important;
 }

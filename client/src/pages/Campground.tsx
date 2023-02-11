@@ -12,9 +12,11 @@ import { GET_CAMPGROUND, GET_CAMPGROUNDS } from "../graphql/campground/Query";
 import Loader from "../components/Loader";
 import { Campground as Camp } from "../interfaces/campgrounds";
 import { ADD_REVIEW } from "../graphql/reviewGraph/Mutation";
+import DeleteCampModal from "../components/DeleteCampModal";
 
 function Campground() {
   const { campId } = useParams();
+  const [show, setShow] = useState(false);
   const id = Number(campId) || 1;
   const { data, loading, error } = useQuery(GET_CAMPGROUND, {
     variables: { campId: id },
@@ -50,6 +52,8 @@ function Campground() {
 
   const campground: Camp = data && data.campground;
 
+  const toggle = () => setShow(!show);
+
   if (loading) return <Loader />;
   if (error) return <Message variant="danger">{error.message}</Message>;
   if (!campground) {
@@ -83,12 +87,12 @@ function Campground() {
                 >
                   Update
                 </Link>
-                <Link
+                <button
                   className="btn btn-outline-danger  my-4"
-                  to="/campgrounds"
+                  onClick={toggle}
                 >
                   Delete
-                </Link>
+                </button>
               </>
             )
           : null}
@@ -184,6 +188,7 @@ function Campground() {
           </Col>
         </Row>
       </>
+      <DeleteCampModal show={show} handleClose={toggle} />
     </Layout>
   );
 }
