@@ -3,28 +3,33 @@ import { Link } from "react-router-dom";
 import FormContainer from "../components/FormContainer";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { Button, Container, Form } from "react-bootstrap";
+import { Alert, Button, Container, Form } from "react-bootstrap";
 import cities from "../constants/cities";
 import useUser from "../hooks/useUser";
 import { useMutation } from "@apollo/client";
 import { CREATE_CAMP } from "../graphql/campground/Mutation";
 
 function CreateCampground() {
+  const [uploading, setUploading] = useState(false);
   const { user } = useUser();
-  const [createCamp, { loading, error, data }] = useMutation(CREATE_CAMP);
+  const [createCamp, { loading, error, data }] = useMutation(CREATE_CAMP, {
+    update() {
+      setUploading(true);
+    },
+  });
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
-  const [uploading, setUploading] = useState(false);
+
   useEffect(() => {
-    if (data) {
+    if (uploading)
       setTimeout(() => {
-        <Message variant="success">Succefully Created!</Message>;
+        setUploading(false);
       }, 1500);
-    }
-  }, [data]);
+  }, [uploading]);
+
   if (!user) {
     return (
       <div
@@ -48,7 +53,7 @@ function CreateCampground() {
       title: name,
       price: Number(price),
       location,
-      description,
+      description: description.replace(/'/g, "\\'"),
       image,
       user_id: Number(user.id),
       created_at: new Date().toISOString().split("T")[0],
@@ -58,7 +63,7 @@ function CreateCampground() {
 
     createCamp({ variables: { input } });
   };
-  console.log(description.length);
+  console.log(description.replace(/[<>*()',?]/g, "\\$&"));
 
   console.log(new Date().toISOString().split("T")[0]);
 
@@ -76,68 +81,70 @@ function CreateCampground() {
         {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>} */}
         {loading ? (
           <Loader />
-        ) : error ? (
-          <Message variant="danger">{error.message}</Message>
         ) : (
-          <Form onSubmit={submitHandler}>
-            <Form.Group controlId="name">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type="name"
-                placeholder="Enter title"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Location</Form.Label>
-              <Form.Select
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                aria-label="Default select example"
-              >
-                <option>Open this select menu</option>
-                {cities.map(({ city, state }) => (
-                  <option value={city + "-" + state}>
-                    {city + ", " + state}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
+          <>
+            {error && <Alert variant="danger">{error?.message}</Alert>}
+            {uploading && <Alert variant="success">Succesfully Created</Alert>}
+            <Form onSubmit={submitHandler}>
+              <Form.Group controlId="name">
+                <Form.Label>Title</Form.Label>
+                <Form.Control
+                  type="name"
+                  placeholder="Enter title"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Location</Form.Label>
+                <Form.Select
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  aria-label="Default select example"
+                >
+                  <option>Open this select menu</option>
+                  {cities.map(({ city, state }) => (
+                    <option value={city + "-" + state}>
+                      {city + ", " + state}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
 
-            <Form.Group controlId="price">
-              <Form.Label>Price</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter price"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              <Form.Group controlId="price">
+                <Form.Label>Price</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter price"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
 
-            <Form.Group controlId="description">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId="image">
-              <Form.Label>Image</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter image url"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              <Form.Group controlId="description">
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group controlId="image">
+                <Form.Label>Image</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter image url"
+                  value={image}
+                  onChange={(e) => setImage(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
 
-            <Button type="submit" variant="primary" className="mt-3">
-              Update
-            </Button>
-          </Form>
+              <Button type="submit" variant="primary" className="mt-3">
+                Update
+              </Button>
+            </Form>
+          </>
         )}
       </FormContainer>
     </>

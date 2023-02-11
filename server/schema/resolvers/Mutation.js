@@ -31,7 +31,7 @@ export default {
       );
       console.log(userSql, "user from sql");
 
-      return { ...rows[0], userSql: user[0] };
+      return { ...rows[0], user: userSql[0] };
     } catch (error) {
       console.log(error);
     }
