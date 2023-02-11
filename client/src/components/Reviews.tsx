@@ -2,15 +2,19 @@ import { Card, Col, ListGroup } from "react-bootstrap";
 import Message from "./Message";
 import { Review } from "../interfaces/campgrounds";
 import Rating from "./Rating";
-// import Loader from "./Loader";
+import { ApolloError } from "@apollo/client/errors";
+import Loader from "./Loader";
+
 type ReviewProp = {
   reviews: Review[];
+  loading: boolean;
+  error: ApolloError | undefined;
 };
 
-function Reviews({ reviews }: ReviewProp) {
+function Reviews({ reviews, loading, error }: ReviewProp) {
   return (
     <Col className="mt-4">
-      <Card>
+      <Card style={{ overflowY: "auto", maxHeight: "50vh" }}>
         <Card.Header className="review-card">
           <h4>Reviews</h4>
         </Card.Header>
@@ -25,15 +29,10 @@ function Reviews({ reviews }: ReviewProp) {
               <p>{review.comment}</p>
             </ListGroup.Item>
           ))}
-          {/* <ListGroup.Item>
-            {successcampgroundReview && (
-            <Message variant="success">Review submitted successfully</Message>
-          )}
-          {loadingcampgroundReview && <Loader />}
-          {errorcampgroundReview && (
-            <Message variant="danger">{errorcampgroundReview}</Message>
-          )}
-          </ListGroup.Item> */}
+          <ListGroup.Item>
+            {loading && <Loader />}
+            {error && <Message variant="danger">{error.message}</Message>}
+          </ListGroup.Item>
         </ListGroup>
       </Card>
     </Col>

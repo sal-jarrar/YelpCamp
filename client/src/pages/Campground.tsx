@@ -7,10 +7,11 @@ import { useParams } from "react-router";
 import Reviews from "../components/Reviews";
 import Message from "../components/Message";
 import useUser from "../hooks/useUser";
-import { useQuery } from "@apollo/client";
-import { GET_CAMPGROUND } from "../graphql/campground/Query";
+import { useMutation, useQuery } from "@apollo/client";
+import { GET_CAMPGROUND, GET_CAMPGROUNDS } from "../graphql/campground/Query";
 import Loader from "../components/Loader";
 import { Campground as Camp } from "../interfaces/campgrounds";
+import { ADD_REVIEW } from "../graphql/reviewGraph/Mutation";
 
 function Campground() {
   const { campId } = useParams();
@@ -18,12 +19,31 @@ function Campground() {
   const { data, loading, error } = useQuery(GET_CAMPGROUND, {
     variables: { campId: id },
   });
+
+  const [addReview, { data: revData, loading: revLoading, error: revErr }] =
+    useMutation(ADD_REVIEW, {
+      refetchQueries: [
+        { query: GET_CAMPGROUND, variables: { campId: id } },
+        { query: GET_CAMPGROUNDS },
+      ],
+    });
   const { user } = useUser();
   const [rating, setRating] = useState("");
   const [comment, setComment] = useState("");
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
+    addReview({
+      variables: {
+        input: {
+          comment,
+          rating,
+          user_id: user?.id,
+          camp_id: campId,
+          created_at: new Date().toISOString().split("T")[0],
+        },
+      },
+    });
   };
 
   const campground: Camp = data && data.campground;
@@ -37,11 +57,42 @@ function Campground() {
       </>
     );
   }
+  if (user && user.id) {
+    console.log(Number(user.id) === Number(campground?.user?.user_id));
+  }
+
+  console.log("userId", "userId");
+  console.log(campground.user.user_id, "auth");
+  const userID = Number(campground.user.user_id);
+  const authId = Number(user?.id);
+
   return (
     <Layout showFooter={true}>
-      <Link className="btn btn-light  my-4" to="/campgrounds">
-        Go Back
-      </Link>
+      <div className="d-flex">
+        <div className="flex-grow-1">
+          <Link className="btn btn-outline-dark  my-4" to="/campgrounds">
+            Go Back
+          </Link>
+        </div>
+        {user
+          ? authId === userID && (
+              <>
+                <Link
+                  className="btn btn-outline-warning mx-2 my-4"
+                  to={`/campground/${campId}/edite`}
+                >
+                  Update
+                </Link>
+                <Link
+                  className="btn btn-outline-danger  my-4"
+                  to="/campgrounds"
+                >
+                  Delete
+                </Link>
+              </>
+            )
+          : null}
+      </div>
 
       <>
         {/* <Meta title={product.name} /> */}
@@ -90,9 +141,9 @@ function Campground() {
                     </Form.Group>
                     <Form.Group>
                       <Button
-                        // disabled={loadingcampgroundReview}
+                        disabled={revLoading || loading}
                         type="submit"
-                        variant="outline-dark"
+                        variant="outline-warning"
                         size="lg"
                         className="mt-3"
                       >
@@ -125,7 +176,11 @@ function Campground() {
               </ListGroup.Item>
             </ListGroup>
 
-            <Reviews reviews={campground.reviews} />
+            <Reviews
+              reviews={campground.reviews}
+              loading={revLoading}
+              error={revErr}
+            />
           </Col>
         </Row>
       </>

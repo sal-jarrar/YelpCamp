@@ -6,12 +6,12 @@ export const Campground = {
     );
     console.log(rows);
     if (rows.length) {
-      const [user] = await pool.query(
-        `SELECT * FROM users WHERE user_id='${rows[0].user_id}'`
-      );
-      console.log(user);
-
-      return [{ ...rows[0], user: user[0] }];
+      return rows.map(async (row) => {
+        const [user] = await pool.query(
+          `SELECT * FROM users WHERE user_id='${row.user_id}'`
+        );
+        return { ...row, user: user[0] };
+      });
     } else {
       return [];
     }

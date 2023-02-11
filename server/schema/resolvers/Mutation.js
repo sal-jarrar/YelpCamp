@@ -83,4 +83,20 @@ export default {
 
     return { ...res[0], token };
   },
+  addReview: async (_, { input }) => {
+    const { camp_id, user_id, comment, created_at, rating } = input;
+
+    const [{ insertId }] = await pool.query(
+      `INSERT INTO review (camp_id,user_id,comment,created_at,rating)VALUES('${camp_id}','${user_id}','${comment}','${created_at}','${rating}')`
+    );
+    const [review] = await pool.query(
+      `SELECT * FROM review WHERE review_id='${insertId}'`
+    );
+
+    const [user] = await pool.query(
+      `SELECT * FROM users WHERE user_id=${review[0].user_id}`
+    );
+
+    return { ...review[0], user: user[0] };
+  },
 };

@@ -40,6 +40,7 @@ export const GET_CAMPGROUND = gql`
       rating
       user {
         name
+        user_id
       }
       reviews {
         comment

@@ -19,7 +19,7 @@ function Campgrounds() {
   data && console.log([...data.getCapmgrounds], "d");
   return (
     <Layout showFooter={true}>
-      <h1>Campgrounds</h1>
+      <h2>Campgrounds</h2>
       <Row xs={1} md={3} className="g-3">
         {data ? (
           [...data.getCapmgrounds].map((camp) => (

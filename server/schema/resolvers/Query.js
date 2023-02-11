@@ -27,7 +27,8 @@ export const Query = {
     const [user] = await pool.query(
       `SELECT * FROM users WHERE user_id='${rows[0].user_id}'`
     );
-
-    return { ...rows[0], rating: Number(rating[0].raitng), user: user[0] };
+    const res = { ...rows[0], rating: Number(rating[0].raitng), user: user[0] };
+    console.log(res);
+    return res;
   },
 };

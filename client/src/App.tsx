@@ -23,6 +23,11 @@ const App = () => {
               element={<CreateCampground />}
             />
             <Route index path="/campground/:campId" element={<Campground />} />
+            <Route
+              index
+              path="/campground/:campId/edit"
+              element={<Campground />}
+            />
             <Route index path="/page/:pageNumber" element={<Campgrounds />} />
             <Route index path="/Login" element={<Login />} />
             <Route index path="/register" element={<Register />} />

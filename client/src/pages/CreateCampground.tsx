@@ -76,7 +76,7 @@ function CreateCampground() {
       </Container>
 
       <FormContainer>
-        <h2>Edit Product</h2>
+        <h2 className="create-header">Create Campground</h2>
         {/* {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>} */}
         {loading ? (
@@ -86,7 +86,7 @@ function CreateCampground() {
             {error && <Alert variant="danger">{error?.message}</Alert>}
             {uploading && <Alert variant="success">Succesfully Created</Alert>}
             <Form onSubmit={submitHandler}>
-              <Form.Group controlId="name">
+              <Form.Group controlId="name" className="my-3">
                 <Form.Label>Title</Form.Label>
                 <Form.Control
                   type="name"
@@ -97,7 +97,8 @@ function CreateCampground() {
               </Form.Group>
               <Form.Group>
                 <Form.Label>Location</Form.Label>
-                <Form.Select
+                <Form.Control
+                  as="select"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   aria-label="Default select example"
@@ -108,12 +109,13 @@ function CreateCampground() {
                       {city + ", " + state}
                     </option>
                   ))}
-                </Form.Select>
+                </Form.Control>
               </Form.Group>
 
-              <Form.Group controlId="price">
+              <Form.Group controlId="price" className="my-3">
                 <Form.Label>Price</Form.Label>
                 <Form.Control
+                  className="rating-input"
                   type="number"
                   placeholder="Enter price"
                   value={price}
@@ -130,7 +132,7 @@ function CreateCampground() {
                   onChange={(e) => setDescription(e.target.value)}
                 ></Form.Control>
               </Form.Group>
-              <Form.Group controlId="image">
+              <Form.Group controlId="image" className="my-3">
                 <Form.Label>Image</Form.Label>
                 <Form.Control
                   type="text"
@@ -140,7 +142,7 @@ function CreateCampground() {
                 ></Form.Control>
               </Form.Group>
 
-              <Button type="submit" variant="primary" className="mt-3">
+              <Button type="submit" variant="outline-warning" className="mt-3">
                 Update
               </Button>
             </Form>

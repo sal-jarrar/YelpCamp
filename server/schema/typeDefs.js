@@ -10,6 +10,7 @@ const typeDefs = gql`
     createCampground(input: CampgroundInput): Campground!
     registerUser(input: RegisterUserInput): User!
     loginUser(input: LoginUserInput): User!
+    addReview(input: ReviewInput): Review!
   }
 
   type Campground {
@@ -22,7 +23,7 @@ const typeDefs = gql`
     created_at: String!
     user: User!
     reviews: [Review]!
-    rating: Int!
+    rating: String!
   }
 
   type User {
@@ -57,6 +58,13 @@ const typeDefs = gql`
   input LoginUserInput {
     email: String!
     password: String!
+  }
+  input ReviewInput {
+    camp_id: ID!
+    user_id: ID!
+    created_at: String!
+    comment: String!
+    rating: String!
   }
 `;
 

@@ -99,13 +99,21 @@ main {
 .review-card {
   background-image: linear-gradient(to bottom right, #ffce00, #fe4880);
 }
-.rating-input {
-  box-shadow: 0px 3px 18px 2px rgb(188, 188, 239);
+.form-control {
+  /* box-shadow: 0px 3px 18px 2px rgb(233, 178, 12); */
+  border: #ffce00 2px solid !important;
+}
+.form-control:focus {
+  box-shadow: 0px 3px 13px 2px rgb(233, 178, 12) !important;
 }
 
 .card-face-front h2 {
   color: #fff;
   font-size: 32px;
+}
+
+.create-header {
+  color: #fadc66;
 }
 
 .card-face-back {
@@ -167,16 +175,16 @@ main {
 
 .card-body h3 {
   color: #19190d;
-  font-size: 24px;
+  font-size: 16px;
   font-weight: 600;
   margin-bottom: 15px;
 }
 
 .card-body p {
   color: #333333;
-  font-size: 15px;
+  font-size: 12px;
   line-height: 1.4;
-  padding: 10px;
+  padding: 0px 10px;
 }
 
 .img-camp {
