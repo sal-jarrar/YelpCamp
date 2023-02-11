@@ -63,8 +63,6 @@ function Campground() {
     console.log(Number(user.id) === Number(campground?.user?.user_id));
   }
 
-  console.log("userId", "userId");
-  console.log(campground.user.user_id, "auth");
   const userID = Number(campground.user.user_id);
   const authId = Number(user?.id);
 
@@ -81,7 +79,7 @@ function Campground() {
               <>
                 <Link
                   className="btn btn-outline-warning mx-2 my-4"
-                  to={`/campground/${campId}/edite`}
+                  to={`/campground/${campId}/edit`}
                 >
                   Update
                 </Link>
