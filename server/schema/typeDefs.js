@@ -8,6 +8,7 @@ const typeDefs = gql`
   type Mutation {
     createCampground(input: CampgroundInput): Campground!
     updateCampground(input: UpdateCampgroundInput): Campground!
+    deleteCampground(campId: ID): String!
     registerUser(input: RegisterUserInput): User!
     loginUser(input: LoginUserInput): User!
     addReview(input: ReviewInput): Review!

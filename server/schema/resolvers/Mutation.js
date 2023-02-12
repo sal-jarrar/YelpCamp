@@ -62,6 +62,13 @@ export default {
       console.log(error);
     }
   },
+
+  deleteCampground: async (_, { campId }) => {
+    await pool.query(`DELETE FROM review WHERE camp_id='${campId}'`);
+    await pool.query(`DELETE FROM campground WHERE camp_id='${campId}'`);
+
+    return "CAMPGROUND DELETED!";
+  },
   registerUser: async (_, { input }) => {
     const { name, email, password } = input;
     const [res] = await pool.query(

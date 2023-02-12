@@ -32,3 +32,8 @@ export const UPDATE_CAMP = gql`
     }
   }
 `;
+export const DELETE_CAMP = gql`
+  mutation DeleteCampground($campId: ID) {
+    deleteCampground(campId: $campId)
+  }
+`;

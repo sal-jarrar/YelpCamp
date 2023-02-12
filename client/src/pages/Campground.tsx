@@ -192,7 +192,7 @@ function Campground() {
           </Col>
         </Row>
       </>
-      <DeleteCampModal show={show} handleClose={toggle} />
+      <DeleteCampModal show={show} handleClose={toggle} campId={id} />
     </Layout>
   );
 }
