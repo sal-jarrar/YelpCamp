@@ -174,9 +174,11 @@ function Campground() {
                   reviewsNum={campground.reviews.length}
                 />
               </ListGroup.Item>
-              <ListGroup.Item>Location: {campground.location}</ListGroup.Item>
-              <ListGroup.Item>
-                Description: {campground.description}
+              <ListGroup.Item>${campground.price}</ListGroup.Item>
+              <ListGroup.Item>{campground.location}</ListGroup.Item>
+              <ListGroup.Item>{campground.description}</ListGroup.Item>
+              <ListGroup.Item className="text-warning-emphasis text-opacity-75 fst-italic fs-6">
+                {campground.user.name}
               </ListGroup.Item>
             </ListGroup>
 
@@ -184,6 +186,8 @@ function Campground() {
               reviews={campground.reviews}
               loading={revLoading}
               error={revErr}
+              userId={authId}
+              campId={id}
             />
           </Col>
         </Row>

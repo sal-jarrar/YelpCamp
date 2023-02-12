@@ -16,6 +16,8 @@ export const GET_CAMPGROUNDS = gql`
         user_id
       }
       reviews {
+        review_id
+        created_at
         comment
         rating
         user_id
@@ -43,6 +45,8 @@ export const GET_CAMPGROUND = gql`
         user_id
       }
       reviews {
+        review_id
+        created_at
         comment
         rating
         user_id

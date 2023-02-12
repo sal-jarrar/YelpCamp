@@ -11,6 +11,8 @@ const typeDefs = gql`
     registerUser(input: RegisterUserInput): User!
     loginUser(input: LoginUserInput): User!
     addReview(input: ReviewInput): Review!
+    updateReview(input: UpdateReviewInput): Review!
+    deleteReview(reviewId: ID): String!
   }
 
   type Campground {
@@ -39,6 +41,7 @@ const typeDefs = gql`
     created_at: String!
     comment: String!
     rating: String!
+    review_id: String!
   }
 
   input CampgroundInput {
@@ -72,6 +75,11 @@ const typeDefs = gql`
     camp_id: ID!
     user_id: ID!
     created_at: String!
+    comment: String!
+    rating: String!
+  }
+  input UpdateReviewInput {
+    review_id: ID!
     comment: String!
     rating: String!
   }

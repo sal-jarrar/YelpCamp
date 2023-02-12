@@ -71,11 +71,11 @@ const Rating = ({
               ? "fas fa-star-half-alt"
               : "far fa-star"
           }
-        ></i>
+        />
       </span>
       {reviewsNum ? (
         <span className="mx-2">
-          {reviewsNum} review{reviewsNum > 1 && `s`}
+          {reviewsNum} Review{reviewsNum > 1 && `s`}
         </span>
       ) : null}
     </div>

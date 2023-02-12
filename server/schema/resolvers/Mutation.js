@@ -125,4 +125,27 @@ export default {
 
     return { ...review[0], user: user[0] };
   },
+  updateReview: async (_, { input }) => {
+    console.log("start");
+    const { comment, review_id, rating } = input;
+
+    await pool.query(
+      `UPDATE review SET comment='${comment}',rating='${rating}' WHERE review_id='${review_id}'`
+    );
+    const [review] = await pool.query(
+      `SELECT * FROM review WHERE review_id='${review_id}'`
+    );
+
+    const [user] = await pool.query(
+      `SELECT * FROM users WHERE user_id=${review[0].user_id}`
+    );
+
+    return { ...review[0], user: user[0] };
+  },
+
+  deleteReview: async (_, { reviewId }) => {
+    await pool.query(`DELETE FROM review WHERE review_id='${reviewId}'`);
+
+    return " REVEIW DELETED!";
+  },
 };
